@@ -35,17 +35,38 @@ flutter pub get
 3. Жаңа API кілтін жасаңыз немесе бар жобаны таңдаңыз
 4. Кілтті көшіріп алыңыз
 
-### 4. API кілтін қосу
+### 4. API кілтін қосу (қауіпсіз тәсіл)
 
-`lib/api_key.dart` файлын ашып, `YOUR_GEMINI_API_KEY_HERE` орнына өз API кілтіңізді қойыңыз:
+Енді кілтті кодқа жазбайсыз. Қолданудың 3 жолы бар (кез келгенін таңдаңыз):
 
-```dart
-const String apiKey = 'AIzaSyBi9K-0r39k_DhxI_cvW9Cf1LAopLwgD5c';
+1) Аргумент арқылы:
+```bash
+./scripts/run_macos.sh --key YOUR_GEMINI_API_KEY
 ```
 
-**Маңызды:** `lib/api_key.dart` файлы `.gitignore`-да бар, сондықтан ол git-ке енгізілмейді.
+2) Қоршаған орта айнымалысы арқылы:
+```bash
+export BILIM_GEMINI_API_KEY=YOUR_GEMINI_API_KEY
+./scripts/run_macos.sh
+```
 
-### 5. Қосымшаны іске қосу
+3) .env файлы арқылы:
+```bash
+cp .env.local.example .env.local
+echo "BILIM_GEMINI_API_KEY=YOUR_GEMINI_API_KEY" > .env.local
+./scripts/run_macos.sh
+```
+
+Егер жоғарыдағы әдістердің ешқайсысы қолданылмаса, қосымша `lib/api_key.dart` ішіндегі фолбэк-кілтті пайдаланады, бірақ бұл ұсынылмайды.
+
+### 5. Қосымшаны іске қосу (macOS)
+
+```bash
+./scripts/bootstrap_macos.sh
+./scripts/run_macos.sh --key YOUR_GEMINI_API_KEY
+```
+
+### 6. Басқа платформалар
 
 ```bash
 # Android эмуляторда іске қосу

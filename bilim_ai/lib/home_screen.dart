@@ -6,6 +6,17 @@ import 'api_key.dart';
 
 // Примечание: API ключ централизован в файле `api_key.dart`.
 
+// Поддержка ключа через --dart-define (предпочтительно для совместной разработки)
+const String _apiKeyFromDefine = String.fromEnvironment('BILIM_GEMINI_API_KEY');
+
+String _effectiveApiKey() {
+  // 1) dart-define
+  if (_apiKeyFromDefine.isNotEmpty) return _apiKeyFromDefine;
+  // 2) фолбэк из api_key.dart
+  if (apiKey.isNotEmpty && apiKey != 'YOUR_GEMINI_API_KEY_HERE') return apiKey;
+  return '';
+}
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -149,9 +160,18 @@ Future<void> _sendToAI() async {
     final physicsPrompt = _getPhysicsPrompt(_textController.text);
 
     Future<http.Response> _callModel(String modelName) {
+      final effectiveKey = _effectiveApiKey();
+      if (effectiveKey.isEmpty) {
+        return Future.value(http.Response(
+            jsonEncode({
+              'error':
+                  'API ключ не найден. Передайте ключ через --dart-define=BILIM_GEMINI_API_KEY=... или задайте его в lib/api_key.dart.'
+            }),
+            400));
+      }
       final url = Uri.parse(
           'https://generativelanguage.googleapis.com/v1/models/'
-          '$modelName:generateContent?key=$apiKey');
+          '$modelName:generateContent?key=$effectiveKey');
       return http.post(
         url,
         headers: {'Content-Type': 'application/json'},

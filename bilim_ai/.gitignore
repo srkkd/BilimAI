@@ -1,3 +1,6 @@
+# Local env files
+.env.local
+
 /lib/api_key.dart
 # Miscellaneous
 *.class
