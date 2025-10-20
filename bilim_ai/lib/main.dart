@@ -1,8 +1,15 @@
 // lib/main.dart
 import 'package:flutter/material.dart';
 import 'splash_screen.dart'; // Импортируем наш сплэш-экран
+import 'package:supabase_flutter/supabase_flutter.dart';
+import 'dart:async';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Supabase.initialize(
+    url: 'https://ousovrpwqpcshhdwshqa.supabase.co',
+    anonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im91c292cnB3cXBjc2hoZHdzaHFhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjA5MTQ4NDAsImV4cCI6MjA3NjQ5MDg0MH0.xID0ZmMdhaoAF0hL2KDcIuOP3xR35gvcCjYMTDZzcEA',
+  );
   runApp(const BilimAIApp());
 }
 
