@@ -1,0 +1,43 @@
+// Prisma schema
+// Run: npx prisma generate && npx prisma migrate dev --name init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String   @id @default(uuid())
+  email        String   @unique
+  passwordHash String
+  displayName  String?
+  createdAt    DateTime @default(now())
+  chats        Chat[]
+}
+
+model Chat {
+  id        String    @id @default(uuid())
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+  title     String?
+  createdAt DateTime  @default(now())
+  messages  Message[]
+
+  @@index([userId])
+}
+
+model Message {
+  id        String   @id @default(uuid())
+  chat      Chat     @relation(fields: [chatId], references: [id], onDelete: Cascade)
+  chatId    String
+  role      String
+  content   String
+  createdAt DateTime @default(now())
+
+  @@index([chatId])
+  @@index([createdAt])
+}

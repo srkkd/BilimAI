@@ -1,5 +1,5 @@
 // lib/main.dart
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'splash_screen.dart'; // Импортируем наш сплэш-экран
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'dart:async';
@@ -18,21 +18,13 @@ class BilimAIApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CupertinoApp(
+    return MaterialApp(
       title: 'Bilim AI',
       debugShowCheckedModeBanner: false,
-      theme: const CupertinoThemeData(
-        primaryColor: Color(0xFF2B6CB0),
-        scaffoldBackgroundColor: CupertinoColors.white,
-        barBackgroundColor: CupertinoColors.systemGrey6,
-        textTheme: CupertinoTextThemeData(
-          textStyle: TextStyle(fontFamily: 'SF Pro Text', fontSize: 16),
-          navLargeTitleTextStyle: TextStyle(
-            fontFamily: 'SF Pro Display',
-            fontSize: 34,
-            fontWeight: FontWeight.w700,
-          ),
-        ),
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF2B6CB0)),
+        scaffoldBackgroundColor: Colors.white,
+        useMaterial3: true,
       ),
       home: const SplashScreen(),
     );
